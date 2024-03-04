@@ -1,18 +1,16 @@
 import React, { useContext } from "react";
 import AvailableProductContext from "../../store/available-product-context";
-import ProductItem from "./ProductItem";
 
 const AvailableProduct = () => {
   const availableProductCtx = useContext(AvailableProductContext);
 
   const { items } = availableProductCtx;
   const productList = items.map((product) => (
-    <ProductItem
-      key={product.title}
-      title={product.title}
-      price={product.price}
-      imgUrl={product.imageUrl}
-    />
+    <li key={product.title}>
+      <h2>{product.title}</h2>
+      <img src={product.imageUrl} alt={product.title} />
+      <h3>{product.price}</h3>
+    </li>
   ));
   return (
     <div>

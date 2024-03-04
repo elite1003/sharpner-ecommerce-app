@@ -1,10 +1,20 @@
-import React from "react";
+import React, { useState } from "react";
 import Product from "./components/Product/Product";
+import Cart from "./components/Cart/Cart";
+import CartContextProvider from "./store/CartContextProvider";
+import Header from "./components/Layout/Header";
 const App = () => {
+  const [isCartShown, setIsCartShown] = useState(false);
+
+  const showCartHandler = () => {
+    setIsCartShown((prev) => !prev);
+  };
   return (
-    <div>
+    <CartContextProvider>
+      {isCartShown && <Cart onHideCart={showCartHandler} />}
+      <Header onHideCart={showCartHandler} />
       <Product />
-    </div>
+    </CartContextProvider>
   );
 };
 
