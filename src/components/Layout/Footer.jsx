@@ -10,7 +10,7 @@ const Footer = () => {
     backgroundColor: "skyblue",
   };
   return (
-    <footer className="footer" style={styleFooter}>
+    <footer className="footer mt-2" style={styleFooter}>
       <Container>
         <Row>
           <Col md={8}>

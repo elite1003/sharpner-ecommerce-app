@@ -8,7 +8,7 @@ import Footer from "./components/Layout/Footer";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import Home from "./components/Home/Home";
 import About from "./components/About/About";
-
+import ContactUs from "./components/ContactUs/ContactUs";
 const router = createBrowserRouter([
   {
     path: "/",
@@ -16,6 +16,7 @@ const router = createBrowserRouter([
   },
   { path: "/about", element: <About /> },
   { path: "/store", element: <Product /> },
+  { path: "/contact-us", element: <ContactUs /> },
 ]);
 const App = () => {
   const [isCartShown, setIsCartShown] = useState(false);

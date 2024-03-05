@@ -19,6 +19,9 @@ const Header = (props) => {
           <Nav.Link href="/about">
             <h3>About</h3>
           </Nav.Link>
+          <Nav.Link href="/contact-us">
+            <h3>Contact</h3>
+          </Nav.Link>
         </Nav>
         <Nav className="mx-auto">
           <Button variant="primary" onClick={props.onHideCart}>
