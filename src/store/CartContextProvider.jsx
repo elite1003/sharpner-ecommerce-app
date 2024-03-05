@@ -2,31 +2,8 @@ import React, { useReducer } from "react";
 import CartContext from "./cart-context";
 
 const defaultState = {
-  items: [
-    {
-      title: "Colors",
-      price: 100,
-      imageUrl:
-        "https://prasadyash2411.github.io/ecom-website/img/Album%201.png",
-      quantity: 2,
-    },
-    {
-      title: "Black and white Colors",
-      price: 50,
-      imageUrl:
-        "https://prasadyash2411.github.io/ecom-website/img/Album%202.png",
-      quantity: 3,
-    },
-
-    {
-      title: "Yellow and Black Colors",
-      price: 70,
-      imageUrl:
-        "https://prasadyash2411.github.io/ecom-website/img/Album%203.png",
-      quantity: 1,
-    },
-  ],
-  totalAmount: 420,
+  items: [],
+  totalAmount: 0,
 };
 
 const cartReducer = (state, action) => {
@@ -58,18 +35,9 @@ const cartReducer = (state, action) => {
       (item) => item.id === action.id
     );
     const existingCartItem = state.items[existingCartItemIndex];
-    const updatedTotalAmount = state.totalAmount - existingCartItem.price;
-    let updatedItems;
-    if (existingCartItem.amount === 1) {
-      updatedItems = state.items.filter((item) => item.id !== action.id);
-    } else {
-      const updatedItem = {
-        ...existingCartItem,
-        amount: existingCartItem.amount - 1,
-      };
-      updatedItems = [...state.items];
-      updatedItems[existingCartItemIndex] = updatedItem;
-    }
+    const updatedTotalAmount =
+      state.totalAmount - existingCartItem.price * existingCartItem.amount;
+    const updatedItems = state.items.filter((item) => item.id !== action.id);
     return {
       items: updatedItems,
       totalAmount: updatedTotalAmount,

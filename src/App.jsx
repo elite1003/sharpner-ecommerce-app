@@ -3,6 +3,8 @@ import Product from "./components/Product/Product";
 import Cart from "./components/Cart/Cart";
 import CartContextProvider from "./store/CartContextProvider";
 import Header from "./components/Layout/Header";
+import HeaderSummary from "./components/Layout/HeaderSummary";
+import Footer from "./components/Layout/Footer";
 const App = () => {
   const [isCartShown, setIsCartShown] = useState(false);
 
@@ -13,7 +15,11 @@ const App = () => {
     <CartContextProvider>
       {isCartShown && <Cart onHideCart={showCartHandler} />}
       <Header onHideCart={showCartHandler} />
-      <Product />
+      <HeaderSummary />
+      <main>
+        <Product />
+      </main>
+      <Footer />
     </CartContextProvider>
   );
 };
