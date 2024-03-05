@@ -10,13 +10,13 @@ const Header = (props) => {
       <Navbar.Toggle aria-controls="basic-navbar-nav" />
       <Navbar.Collapse id="basic-navbar-nav">
         <Nav className="mx-auto ">
-          <Nav.Link href="#home">
+          <Nav.Link href="/">
             <h3>Home</h3>
           </Nav.Link>
-          <Nav.Link href="#store">
+          <Nav.Link href="/store">
             <h3>Store</h3>
           </Nav.Link>
-          <Nav.Link href="#about">
+          <Nav.Link href="/about">
             <h3>About</h3>
           </Nav.Link>
         </Nav>

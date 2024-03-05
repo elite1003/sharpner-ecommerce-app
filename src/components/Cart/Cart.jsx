@@ -59,7 +59,7 @@ const Cart = (props) => {
           </Table>
         </Modal.Body>
         <Modal.Footer>
-          <h1>Total amount Rs: {totalAmount}</h1>
+          <h3>Total amount Rs: {totalAmount}</h3>
           <Button variant="danger" onClick={props.onHideCart}>
             Close
           </Button>
