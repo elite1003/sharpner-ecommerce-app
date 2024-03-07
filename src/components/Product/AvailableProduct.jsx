@@ -9,7 +9,7 @@ const AvailableProduct = () => {
   const { items } = availableProductCtx;
   const { addItem } = cartCtx;
   const productList = items.map((product) => (
-    <Col key={product.title} sm={6} md={4} lg={3}>
+    <Col key={product.id} sm={6} md={4} lg={3}>
       <Card className="mb-4">
         <Card.Img variant="top" src={product.imageUrl} />
         <Card.Body>

@@ -26,7 +26,7 @@ const Cart = (props) => {
           <Button
             variant="danger"
             onClick={() => {
-              removeItem(item.id);
+              removeItem(item.id, item.name);
             }}
           >
             Remove

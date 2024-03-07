@@ -1,12 +1,13 @@
-import React, { useReducer } from "react";
+import React, { useReducer, useEffect, useCallback } from "react";
 import CartContext from "./cart-context";
 
-const defaultState = {
-  items: [],
-  totalAmount: 0,
-};
-
 const cartReducer = (state, action) => {
+  if (action.type === "INIT") {
+    return {
+      items: action.item.data,
+      totalAmount: action.item.totalAmount,
+    };
+  }
   if (action.type === "ADD") {
     const updatedTotalAmount =
       state.totalAmount + action.item.amount * action.item.price;
@@ -43,18 +44,80 @@ const cartReducer = (state, action) => {
       totalAmount: updatedTotalAmount,
     };
   }
-  return defaultState;
+  return { items: [], totalAmount: 0 };
 };
 
 const CartContextProvider = (props) => {
-  const [cartState, dispatchCartAction] = useReducer(cartReducer, defaultState);
+  const fetchCart = useCallback(async () => {
+    try {
+      let initialState = [];
+      let totalAmount = 0;
+      const response = await fetch(
+        "https://swapi-movie-app-default-rtdb.asia-southeast1.firebasedatabase.app/cart.json"
+      );
+      if (!response.ok) {
+        throw new Error("cart fetch from backend failed");
+      }
+      const data = await response.json();
+      for (let key in data) {
+        initialState.push({ ...data[key], name: key });
+        totalAmount += data[key].amount * data[key].price;
+      }
+      dispatchCartAction({
+        type: "INIT",
+        item: { data: initialState, totalAmount: totalAmount },
+      });
+    } catch (e) {
+      alert(e.message);
+    }
+  }, []);
 
-  const addItemToCartHandler = (item) => {
-    dispatchCartAction({ type: "ADD", item: item });
+  useEffect(() => {
+    fetchCart();
+  }, [fetchCart]);
+
+  const [cartState, dispatchCartAction] = useReducer(cartReducer, {
+    items: [],
+    totalAmount: 0,
+  });
+
+  const addItemToCartHandler = async (item) => {
+    try {
+      const response = await fetch(
+        "https://swapi-movie-app-default-rtdb.asia-southeast1.firebasedatabase.app/cart.json",
+        {
+          method: "POST",
+          body: JSON.stringify(item),
+          headers: {
+            "Content-type": "application/json",
+          },
+        }
+      );
+      if (!response.ok) {
+        throw new Error("addition failed to cart");
+      }
+      const data = await response.json();
+      dispatchCartAction({ type: "ADD", item: { ...item, name: data.name } });
+    } catch (e) {
+      alert(e.message);
+    }
   };
 
-  const removeItemFromCartHandler = (id) => {
-    dispatchCartAction({ type: "REMOVE", id: id });
+  const removeItemFromCartHandler = async (id, name) => {
+    try {
+      const response = await fetch(
+        `https://swapi-movie-app-default-rtdb.asia-southeast1.firebasedatabase.app/cart/${name}.json`,
+        {
+          method: "DELETE",
+        }
+      );
+      if (!response.ok) {
+        throw new Error("Deletion failed from cart");
+      }
+      dispatchCartAction({ type: "REMOVE", id: id });
+    } catch (e) {
+      alert(e.message);
+    }
   };
 
   const cartContext = {
