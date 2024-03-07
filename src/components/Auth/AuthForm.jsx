@@ -49,7 +49,7 @@ const AuthForm = () => {
         throw new Error(`${errorMessage}`);
       }
       authCtx.login(data.idToken);
-      history.replace("/");
+      history.replace("/store");
     } catch (e) {
       alert(e.message);
     }
