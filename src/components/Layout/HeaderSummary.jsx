@@ -4,7 +4,7 @@ const HeaderSummary = () => {
   const style = {
     backgroundColor: "black",
     marginTop: "40px",
-    padding: "40px",
+    padding: "10px",
     color: "white",
     fontSize: "100px",
     textAlign: "center",

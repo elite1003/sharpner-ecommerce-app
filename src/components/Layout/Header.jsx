@@ -1,6 +1,7 @@
 import React, { useContext } from "react";
 import { Navbar, Nav, Button } from "react-bootstrap";
 import CartContext from "../../store/cart-context";
+import { NavLink } from "react-router-dom/cjs/react-router-dom";
 const Header = (props) => {
   const cartCtx = useContext(CartContext);
   const { items } = cartCtx;
@@ -10,18 +11,37 @@ const Header = (props) => {
       <Navbar.Toggle aria-controls="basic-navbar-nav" />
       <Navbar.Collapse id="basic-navbar-nav">
         <Nav className="mx-auto ">
-          <Nav.Link href="/">
+          <NavLink to="/">
             <h3>Home</h3>
-          </Nav.Link>
-          <Nav.Link href="/store">
+          </NavLink>
+        </Nav>
+        <Nav className="mx-auto ">
+          <NavLink to="/store">
             <h3>Store</h3>
-          </Nav.Link>
-          <Nav.Link href="/about">
+          </NavLink>
+        </Nav>
+        <Nav className="mx-auto ">
+          <NavLink to="/about">
             <h3>About</h3>
-          </Nav.Link>
-          <Nav.Link href="/contact-us">
-            <h3>Contact</h3>
-          </Nav.Link>
+          </NavLink>
+        </Nav>
+        <Nav className="mx-auto ">
+          <NavLink to="/contact-us">
+            <h3>Contact Us</h3>
+          </NavLink>
+        </Nav>
+        <Nav className="mx-auto ">
+          <NavLink to="/auth">
+            <h3>Login</h3>
+          </NavLink>
+        </Nav>
+        <Nav className="mx-auto ">
+          <NavLink to="/profile">
+            <h3>Profile</h3>
+          </NavLink>
+        </Nav>
+        <Nav className="mx-auto ">
+          <Button>Logout</Button>
         </Nav>
         <Nav className="mx-auto">
           <Button variant="primary" onClick={props.onHideCart}>

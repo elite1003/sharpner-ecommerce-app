@@ -20,7 +20,7 @@ const ContactUs = () => {
       }
     );
     if (response.ok) {
-      console.log("success");
+      console.log("successfully logged complain");
     }
   };
 

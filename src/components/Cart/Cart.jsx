@@ -38,7 +38,7 @@ const Cart = (props) => {
   return (
     <div
       className="modal show mt-5"
-      style={{ display: "block", position: "initial" }}
+      style={{ display: "block", position: "relative" }}
     >
       <Modal.Dialog onHide={props.onHideCart}>
         <Modal.Header>
@@ -46,7 +46,7 @@ const Cart = (props) => {
           <CloseButton onClick={props.onHideCart} />
         </Modal.Header>
         <Modal.Body>
-          <Table striped bordered hover>
+          <Table>
             <thead>
               <tr>
                 <th>ITEM</th>

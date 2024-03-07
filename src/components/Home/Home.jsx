@@ -29,8 +29,8 @@ const Home = () => {
       description: "Lorem epsum dimdaba dininsin ",
     },
   ];
-  const detailList = details.map((item) => (
-    <ListGroup.Item>
+  const detailList = details.map((item, index) => (
+    <ListGroup.Item key={index}>
       <div className="d-flex w-100 justify-content-between">
         <h5>{item.date}</h5>
         <small>{item.place}</small>
