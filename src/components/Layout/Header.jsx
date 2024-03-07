@@ -1,13 +1,19 @@
 import React, { useContext } from "react";
 import { Navbar, Nav, Button } from "react-bootstrap";
 import CartContext from "../../store/cart-context";
-import { NavLink } from "react-router-dom/cjs/react-router-dom";
+import { NavLink, useHistory } from "react-router-dom/cjs/react-router-dom";
 import AuthContext from "../../store/auth-context";
 const Header = (props) => {
   const cartCtx = useContext(CartContext);
   const authCtx = useContext(AuthContext);
+  const history = useHistory();
   const { items } = cartCtx;
   const totalQuantity = items.reduce((acc, item) => acc + item.amount, 0);
+
+  const logoutHandler = () => {
+    authCtx.logout();
+    history.replace("/auth");
+  };
   return (
     <Navbar bg="light" expand="lg" fixed="top">
       <Navbar.Toggle aria-controls="basic-navbar-nav" />
@@ -47,13 +53,7 @@ const Header = (props) => {
               </NavLink>
             </Nav>
             <Nav className="mx-auto ">
-              <Button
-                onClick={() => {
-                  authCtx.logout();
-                }}
-              >
-                Logout
-              </Button>
+              <Button onClick={logoutHandler}>Logout</Button>
             </Nav>
           </>
         )}
