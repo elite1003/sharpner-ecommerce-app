@@ -55,13 +55,13 @@ const Header = (props) => {
             <Nav className="mx-auto ">
               <Button onClick={logoutHandler}>Logout</Button>
             </Nav>
+            <Nav className="mx-auto">
+              <Button variant="primary" onClick={props.onHideCart}>
+                Cart {totalQuantity}
+              </Button>
+            </Nav>
           </>
         )}
-        <Nav className="mx-auto">
-          <Button variant="primary" onClick={props.onHideCart}>
-            Cart {totalQuantity}
-          </Button>
-        </Nav>
       </Navbar.Collapse>
     </Navbar>
   );

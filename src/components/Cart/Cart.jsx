@@ -64,7 +64,7 @@ const Cart = (props) => {
             Close
           </Button>
         </Modal.Footer>
-        <Button>Purchase</Button>
+        <Button>Order</Button>
       </Modal.Dialog>
     </div>
   );

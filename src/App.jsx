@@ -31,9 +31,6 @@ const App = () => {
           <Route path="/about">
             <About />
           </Route>
-          <Route path="/store">
-            <Product />
-          </Route>
           <Route path="/contact-us">
             <ContactUs />
           </Route>
@@ -43,12 +40,17 @@ const App = () => {
             </Route>
           )}
           {authCtx.isLoggedIn && (
-            <Route path="/profile">
-              <UserProfile />
-            </Route>
+            <>
+              <Route path="/store">
+                <Product />
+              </Route>
+              <Route path="/profile">
+                <UserProfile />
+              </Route>
+            </>
           )}
           <Route path="*">
-            <Redirect to="/" />
+            <Redirect to="/auth" />
           </Route>
         </Switch>
       </main>
