@@ -1,9 +1,11 @@
 import classes from "./ProfileForm.module.css";
 import { useRef, useContext } from "react";
 import AuthContext from "../../store/auth-context";
+import { useHistory } from "react-router-dom/cjs/react-router-dom";
 const ProfileForm = () => {
   const passwordInputRef = useRef(null);
   const authCtx = useContext(AuthContext);
+  const history = useHistory();
   const { token } = authCtx;
 
   const submitHandler = async (e) => {
@@ -25,7 +27,10 @@ const ProfileForm = () => {
           },
         }
       );
-      console.log(response);
+      if (!response.ok) {
+        throw new Error("Updating password failed");
+      }
+      history.replace("/auth");
     } catch (e) {
       console.log(e.message);
     }
