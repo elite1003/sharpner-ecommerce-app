@@ -30,8 +30,8 @@ const Home = () => {
     },
   ];
   const detailList = details.map((item, index) => (
-    <ListGroup.Item key={index}>
-      <div className="d-flex w-100 justify-content-between">
+    <ListGroup.Item key={index} className="card-body border-0 border-bottom">
+      <div className="d-flex  justify-content-between">
         <h5>{item.date}</h5>
         <small>{item.place}</small>
         <p>{item.description} </p>
@@ -39,7 +39,11 @@ const Home = () => {
       </div>
     </ListGroup.Item>
   ));
-  return <ListGroup>{detailList}</ListGroup>;
+  return (
+    <ListGroup className="p-4 m-auto mt-5 mb-5 card w-75 shadow">
+      {detailList}
+    </ListGroup>
+  );
 };
 
 export default Home;

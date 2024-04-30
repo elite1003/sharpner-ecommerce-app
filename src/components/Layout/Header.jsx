@@ -15,53 +15,61 @@ const Header = (props) => {
     history.replace("/");
   };
   return (
-    <Navbar bg="light" expand="lg" fixed="top">
+    <Navbar bg="dark" data-bs-theme="dark" expand="lg" fixed="top">
       <Navbar.Toggle aria-controls="basic-navbar-nav" />
       <Navbar.Collapse id="basic-navbar-nav">
-        <Nav className="mx-auto ">
-          <NavLink to="/">
+        <Nav className="mx-auto">
+          <NavLink to="/" className="text-decoration-none text-white">
             <h3>Home</h3>
           </NavLink>
         </Nav>
-        <Nav className="mx-auto ">
-          <NavLink to="/store">
-            <h3>Store</h3>
-          </NavLink>
-        </Nav>
-        <Nav className="mx-auto ">
-          <NavLink to="/about">
-            <h3>About</h3>
-          </NavLink>
-        </Nav>
-        <Nav className="mx-auto ">
-          <NavLink to="/contact-us">
-            <h3>Contact Us</h3>
-          </NavLink>
-        </Nav>
-        {!authCtx.isLoggedIn && (
-          <Nav className="mx-auto ">
-            <NavLink to="/auth">
-              <h3>Login</h3>
+        <div className="d-flex w-75 justify-content-end ">
+          <Nav className="mx-3">
+            <NavLink to="/store" className="text-decoration-none text-white">
+              <h3>Store</h3>
             </NavLink>
           </Nav>
-        )}
-        {authCtx.isLoggedIn && (
-          <>
-            <Nav className="mx-auto ">
-              <NavLink to="/profile">
-                <h3>Profile</h3>
+          <Nav className="mx-3">
+            <NavLink to="/about" className="text-decoration-none text-white">
+              <h3>About</h3>
+            </NavLink>
+          </Nav>
+          <Nav className="mx-3">
+            <NavLink
+              to="/contact-us"
+              className="text-decoration-none text-white"
+            >
+              <h3>ContactUs</h3>
+            </NavLink>
+          </Nav>
+          {!authCtx.isLoggedIn && (
+            <Nav className="mx-3">
+              <NavLink to="/auth" className="text-decoration-none text-white">
+                <h3>Login</h3>
               </NavLink>
             </Nav>
-            <Nav className="mx-auto ">
-              <Button onClick={logoutHandler}>Logout</Button>
-            </Nav>
-            <Nav className="mx-auto">
-              <Button variant="primary" onClick={props.onHideCart}>
-                Cart {totalQuantity}
-              </Button>
-            </Nav>
-          </>
-        )}
+          )}
+          {authCtx.isLoggedIn && (
+            <>
+              <Nav className="mx-3">
+                <NavLink
+                  to="/profile"
+                  className="text-decoration-none text-white"
+                >
+                  <h3>Profile</h3>
+                </NavLink>
+              </Nav>
+              <Nav className=" mx-3">
+                <Button onClick={logoutHandler}>Logout</Button>
+              </Nav>
+              <Nav className="mx-3">
+                <Button variant="primary" onClick={props.onHideCart}>
+                  Cart {totalQuantity}
+                </Button>
+              </Nav>
+            </>
+          )}
+        </div>
       </Navbar.Collapse>
     </Navbar>
   );

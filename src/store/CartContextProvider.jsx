@@ -1,10 +1,10 @@
-import React, { useReducer, useEffect, useCallback } from "react";
+import React, { useReducer, useCallback } from "react";
 import CartContext from "./cart-context";
 
 const cartReducer = (state, action) => {
   if (action.type === "INIT") {
     return {
-      items: action.item.data,
+      items: action.item.initialItems,
       totalAmount: action.item.totalAmount,
     };
   }
@@ -36,8 +36,11 @@ const cartReducer = (state, action) => {
       (item) => item.id === action.id
     );
     const existingCartItem = state.items[existingCartItemIndex];
-    const updatedTotalAmount =
-      state.totalAmount - existingCartItem.price * existingCartItem.amount;
+    let updatedTotalAmount;
+    if (existingCartItem) {
+      updatedTotalAmount =
+        state.totalAmount - existingCartItem.price * existingCartItem.amount;
+    }
     const updatedItems = state.items.filter((item) => item.id !== action.id);
     return {
       items: updatedItems,
@@ -48,79 +51,25 @@ const cartReducer = (state, action) => {
 };
 
 const CartContextProvider = (props) => {
-  const fetchCart = useCallback(async () => {
-    try {
-      let initialState = [];
-      let totalAmount = 0;
-      const response = await fetch(
-        "https://swapi-movie-app-default-rtdb.asia-southeast1.firebasedatabase.app/cart.json"
-      );
-      if (!response.ok) {
-        throw new Error("cart fetch from backend failed");
-      }
-      const data = await response.json();
-      for (let key in data) {
-        initialState.push({ ...data[key], name: key });
-        totalAmount += data[key].amount * data[key].price;
-      }
-      dispatchCartAction({
-        type: "INIT",
-        item: { data: initialState, totalAmount: totalAmount },
-      });
-    } catch (e) {
-      alert(e.message);
-    }
-  }, []);
-
-  useEffect(() => {
-    fetchCart();
-  }, [fetchCart]);
-
   const [cartState, dispatchCartAction] = useReducer(cartReducer, {
     items: [],
     totalAmount: 0,
   });
 
-  const addItemToCartHandler = async (item) => {
-    try {
-      const response = await fetch(
-        "https://swapi-movie-app-default-rtdb.asia-southeast1.firebasedatabase.app/cart.json",
-        {
-          method: "POST",
-          body: JSON.stringify(item),
-          headers: {
-            "Content-type": "application/json",
-          },
-        }
-      );
-      if (!response.ok) {
-        throw new Error("addition failed to cart");
-      }
-      const data = await response.json();
-      dispatchCartAction({ type: "ADD", item: { ...item, name: data.name } });
-    } catch (e) {
-      alert(e.message);
-    }
+  const initCartHandler = useCallback((item) => {
+    dispatchCartAction({ type: "INIT", item: item });
+  }, []);
+
+  const addItemToCartHandler = (item) => {
+    dispatchCartAction({ type: "ADD", item: item });
   };
 
-  const removeItemFromCartHandler = async (id, name) => {
-    try {
-      const response = await fetch(
-        `https://swapi-movie-app-default-rtdb.asia-southeast1.firebasedatabase.app/cart/${name}.json`,
-        {
-          method: "DELETE",
-        }
-      );
-      if (!response.ok) {
-        throw new Error("Deletion failed from cart");
-      }
-      dispatchCartAction({ type: "REMOVE", id: id });
-    } catch (e) {
-      alert(e.message);
-    }
+  const removeItemFromCartHandler = async (id) => {
+    dispatchCartAction({ type: "REMOVE", id: id });
   };
 
   const cartContext = {
+    initCart: initCartHandler,
     items: cartState.items,
     totalAmount: cartState.totalAmount,
     addItem: addItemToCartHandler,

@@ -7,7 +7,7 @@ const Cart = (props) => {
   const { items, totalAmount, removeItem } = useContext(CartContext);
   const itemList = items.map((item) => {
     return (
-      <tr>
+      <tr key={item.id}>
         <td>
           <Image
             src={item.imageUrl}
@@ -26,7 +26,7 @@ const Cart = (props) => {
           <Button
             variant="danger"
             onClick={() => {
-              removeItem(item.id, item.name);
+              removeItem(item.id);
             }}
           >
             Remove
@@ -37,7 +37,7 @@ const Cart = (props) => {
   });
   return (
     <div
-      className="modal show mt-5"
+      className="modal show"
       style={{ display: "block", position: "relative" }}
     >
       <Modal.Dialog onHide={props.onHideCart}>

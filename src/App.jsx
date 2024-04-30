@@ -1,9 +1,7 @@
 import React, { useState, useContext } from "react";
 import Product from "./components/Product/Product";
 import Cart from "./components/Cart/Cart";
-import CartContextProvider from "./store/CartContextProvider";
 import Header from "./components/Layout/Header";
-import HeaderSummary from "./components/Layout/HeaderSummary";
 import Footer from "./components/Layout/Footer";
 import Home from "./components/Home/Home";
 import About from "./components/About/About";
@@ -12,18 +10,22 @@ import { Redirect, Route, Switch } from "react-router-dom/cjs/react-router-dom";
 import AuthPage from "./components/Auth/AuthPage";
 import UserProfile from "./components/Profile/UserProfile";
 import AuthContext from "./store/auth-context";
+import useInitCart from "./hooks/useInitCart";
+import useSaveCart from "./hooks/useSaveCart";
+
 const App = () => {
   const [isCartShown, setIsCartShown] = useState(false);
   const authCtx = useContext(AuthContext);
+  useInitCart();
+  useSaveCart();
   const showCartHandler = () => {
     setIsCartShown((prev) => !prev);
   };
   return (
-    <CartContextProvider>
+    <div className="d-flex flex-column min-vh-100">
       {isCartShown && <Cart onHideCart={showCartHandler} />}
       <Header onHideCart={showCartHandler} />
-      <HeaderSummary />
-      <main>
+      <main style={{ marginTop: "5rem" }}>
         <Switch>
           <Route path="/" exact>
             <Home />
@@ -55,7 +57,7 @@ const App = () => {
         </Switch>
       </main>
       <Footer />
-    </CartContextProvider>
+    </div>
   );
 };
 

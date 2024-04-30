@@ -3,12 +3,12 @@ import { Container, Row, Col, Image } from "react-bootstrap";
 import bandMemberImg from "../../assets/bandMembers.png";
 const About = () => {
   return (
-    <Container>
+    <Container className="d-flex ">
       <Row>
         <Col xs={6} md={4}>
           <Image src={bandMemberImg} thumbnail />
         </Col>
-        <Col>
+        <Col className="align-self-center">
           <h4>
             Lorem ipsum dolor sit amet consectetur adipisicing elit. Nam illum
             minus unde, esse reiciendis atque, obcaecati veritatis, voluptatum

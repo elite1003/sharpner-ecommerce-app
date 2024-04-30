@@ -25,9 +25,9 @@ const ContactUs = () => {
   };
 
   return (
-    <Container>
-      <h1>Contact Us</h1>
-      <Form onSubmit={handleSubmit}>
+    <Container className="mb-5 ">
+      <h1 className="text-center">Contact Us</h1>
+      <Form onSubmit={handleSubmit} className="card p-5 w-50 m-auto shadow-lg">
         <Form.Group controlId="formBasicName">
           <Form.Label>Name</Form.Label>
           <Form.Control type="text" placeholder="Enter your name" />
@@ -47,7 +47,7 @@ const ContactUs = () => {
             placeholder="Enter your message"
           />
         </Form.Group>
-        <Button variant="primary" type="submit">
+        <Button variant="primary" type="submit" className="mt-4">
           Submit
         </Button>
       </Form>

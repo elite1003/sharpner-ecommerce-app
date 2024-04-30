@@ -2,8 +2,9 @@ import { useRef, useState, useContext } from "react";
 import classes from "./AuthForm.module.css";
 import AuthContext from "../../store/auth-context";
 import { useHistory } from "react-router-dom/cjs/react-router-dom";
+
 const AuthForm = () => {
-  const [isLogin, setIsLogin] = useState(true);
+  const [isLoginMode, setisLoginMode] = useState(true);
   const [isLoading, setIsLoading] = useState(false);
   const emailInputRef = useRef(null);
   const passwordInputRef = useRef(null);
@@ -11,16 +12,15 @@ const AuthForm = () => {
   const history = useHistory();
 
   const switchAuthModeHandler = () => {
-    setIsLogin((prevState) => !prevState);
+    setisLoginMode((prevState) => !prevState);
   };
 
   const submitHandler = async (event) => {
     event.preventDefault();
     const enteredEmail = emailInputRef.current.value;
     const enteredPassword = passwordInputRef.current.value;
-    //validation
     let url;
-    if (isLogin) {
+    if (isLoginMode) {
       url =
         "https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=AIzaSyBK8Hfm1ccNpEEMJ0Zi6Og3o-jwrbwt-JM";
     } else {
@@ -42,13 +42,14 @@ const AuthForm = () => {
       });
       const data = await response.json();
       if (!response.ok) {
-        let errorMessage = "Authentication failed";
+        let errorMessage =
+          "Authentication failed email or password is incorrect";
         if (data && data.error && data.error.message) {
           errorMessage = data.error.message;
         }
         throw new Error(`${errorMessage}`);
       }
-      authCtx.login(data.idToken);
+      authCtx.login(data.idToken, enteredEmail.replace(/[@.]/g, ""));
       history.replace("/store");
     } catch (e) {
       alert(e.message);
@@ -56,8 +57,8 @@ const AuthForm = () => {
     setIsLoading(false);
   };
   return (
-    <section className={classes.auth}>
-      <h1>{isLogin ? "Login" : "Sign Up"}</h1>
+    <section className={`${classes.auth} shadow-lg`}>
+      <h1>{isLoginMode ? "Login" : "Sign Up"}</h1>
       <form onSubmit={submitHandler}>
         <div className={classes.control}>
           <label htmlFor="email">Your Email</label>
@@ -74,7 +75,7 @@ const AuthForm = () => {
         </div>
         <div className={classes.actions}>
           {!isLoading && (
-            <button>{isLogin ? "Login" : "Create Account"}</button>
+            <button>{isLoginMode ? "Login" : "Create Account"}</button>
           )}
           {isLoading && <p>Sending request....</p>}
           <button
@@ -82,7 +83,7 @@ const AuthForm = () => {
             className={classes.toggle}
             onClick={switchAuthModeHandler}
           >
-            {isLogin ? "Create new account" : "Login with existing account"}
+            {isLoginMode ? "Create new account" : "Login with existing account"}
           </button>
         </div>
       </form>
